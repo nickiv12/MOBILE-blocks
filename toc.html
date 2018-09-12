@@ -34,7 +34,8 @@ setTimeout("jQuery('.unhover').removeClass('hover')", 500);
     /* ----- Выпадающее меню на css ----- */
     div.toc {
       /* TO DO - Добавить плавающее положение */
-      float: right;
+/*      float: right;*/
+/*      overflow: hidden; */
 	   width: 250px;
 	   margin: 2px 2px;  /*поля */
 	   padding: 2px; /* отступы */
@@ -59,7 +60,7 @@ setTimeout("jQuery('.unhover').removeClass('hover')", 500);
       /*margin: 3px;  Задаем отступы т.к. приходится менять стили браузера */
       /*padding-left: 13px;  Задаем поля т.к. приходится менять стили браузера */
     }
-    div.toc ol:hover li {display: list-item;} /* Если указать block, то не будет маркеров */
+    div.toc:hover li {display: list-item;} /* Если указать block, то не будет маркеров */
 
   </style>
 </head>
