@@ -95,8 +95,13 @@
 
     // Обрабатываем клик по Оглавлению.
     $('div.toc h4').click(function(){
-      $('.toc').css("width", 250);
-      $('.toc ol').css("display", "block");
+      if ($(this).width() < 60){
+        $('.toc').css("width", 250);
+        $('.toc ol').css("display", "block");
+      } else {
+        $('.toc').css("width", 50);
+        $('.toc ol').css("display", "none");
+      }
     });
 
     // Обрабатываем клик по пунку Оглавления.
