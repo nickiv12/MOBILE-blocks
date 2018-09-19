@@ -36,20 +36,18 @@
       /* Цвет приятный для глаз */
     }
 
+    /* Теперь ВСЕ БУДУТ наследовать  box-sizing от родителя  */
     *,
     *:before,
     *:after {
       box-sizing: inherit;
     }
 
-    /* Теперь ВСЕ наследуют  box-sizing от родителя  */
-
     /* 1. === каркас сайта - НАЧАЛО */
+    /* Прижать к верху страницы обязательно для body - 0px */
     body {
       margin: 0px auto;
     }
-
-    /* Прижать к верху страницы обязательно для body - 0px */
 
     /* Стили контейнера сайта */
     .cont-site {
@@ -65,6 +63,11 @@
       min-height: 40px;
       background-color: aquamarine;
       text-align: center;
+      display: flex;
+    }
+    header h1 {
+      font-size: 20px;
+      margin: 0 auto;
     }
 
     /* СЕРЕДИНА САЙТА - sidebar (aside), article, ad - реклама */
@@ -235,7 +238,18 @@
 <body>
   <div class="cont-site">
     <!-- НАЧАЛО Контейнера сайта -->
-    <header> ЛОГОТИП </header>
+    <header>
+      <h1>ЛОГОТИП</h1>
+      <div class="panel-for-site">
+        <label>
+          <input type="checkbox" id="tip" checked="checked">Показывать перевод английских слов</label>
+        <br>
+        <label>
+          <input type="radio" name='sd-place' id="left" checked="checked">слева </label> &lt;&lt; SIDEBAR &gt;&gt;
+        <label>
+          <input type="radio" name='sd-place' id="right"> справа</label>
+      </div>
+    </header>
     <div class="main">
       <!-- НАЧАЛО 3-колоночной верстки -->
       <aside>
@@ -303,7 +317,6 @@
       - Если будет что-то, но не хэш (убрал #) - в live Preview сообщение Cannot GET /tocJS.htmltoc_3
       В реальном браузере  ошибка 404 - файл не найден.
       */
-
       if (hash.search(/#/) == 0) {
         /*Если первый элемент хэша знак # (начинается с 0) , то:
         - У ВСЕХ li удаляем  класс li_selected.
@@ -312,7 +325,6 @@
         $('div.toc ol li').removeClass('li_selected');
         $('[href="' + hash + '"]').parent().attr("class", "li_selected");
       }
-
       // Обрабатываем клик по свернутому Оглавлению (h4).
       $('div.toc h4').click(function() {
         if ($(this).width() < 50) {
@@ -329,7 +341,6 @@
           $('.toc ol').css("display", "none");
         }
       });
-
       // Обрабатываем клик по пунку Оглавления.
       $('div.toc ol li').click(function() {
         $('div.toc ol li').removeClass('li_selected'); // У ВСЕХ li удаляем класс
@@ -341,6 +352,13 @@
         });
       }); // ====== КОНЕЦ управление оглавлением страницы =======
 
+      // ==== смена позиции sidebar ==================================
+      $('[name = sd-place]').click(function(){
+        var a = $(this).attr('id');
+        if(a == 'left') $('.main').css('flex-direction', 'row');
+        else if(a == 'right') $('.main').css('flex-direction', 'row-reverse');
+        //alert(a);
+      });
     });
   </script>
 </body>
