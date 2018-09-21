@@ -6,10 +6,8 @@
   - полупрозрачна, чтобы был виден текст под ней;
   - При нажатии появляется оглавление страницы;
   - При выборе пункта оглаления страницы происходит переход на странице к параграфу;
-  TO DO: При скачивании с GitHub ТЕРЯЮТСЯ ОТСТУПЫ - НАДО постоянно копровать на флэшку и переносить между компами.
-  - Добавить каркас сайта.
-  - Добавить стили каркаса сайта.
-  - Проверить в PageSpeed Insight.
+  TO DO:
+		- Немного увеличить шрифт страницы при просмотре на МАЛЕНЬКОМ экране.
 -->
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,17 +21,15 @@
     */
     /* 0. ====== Базовые стили для ВСЕГО сайта ======== */
     html {
-      /* ВСЕ эти стили наследуются */
-      box-sizing: border-box;
       /* ширина = content+border+padding. https://ymatuhin.ru/front-end/better_box_sizing/*/
+      box-sizing: border-box;
       font-family: Helvetica, Arial, Verdana, sans-serif;
-      /*   */
-      font-size: 0.72em;
       /* От размера в браузере */
-      line-height: 1.4;
+      font-size: 0.85em;
       /* Межстрочный интервал */
-      color: #585877;
+      line-height: 1.4;
       /* Цвет приятный для глаз */
+      color: #585877;
     }
 
     /* Теперь ВСЕ БУДУТ наследовать  box-sizing от родителя  */
@@ -51,8 +47,8 @@
 
     /* Стили контейнера сайта */
     .cont-site {
-      max-width: 35cm;
       /* Максимальная ширина ВСЕГО сайта */
+      max-width: 35cm;
       justify-content: space-between;
     }
 
@@ -69,12 +65,14 @@
       font-size: 20px;
       margin: 0 auto;
     }
+		.panel-for-site {
+			display: block;
+		}
 
     /* СЕРЕДИНА САЙТА - sidebar (aside), article, ad - реклама */
     .main {
       margin: 0px auto;
       display: flex;
-      /*      width: 100%;*/
       border: 1px solid green;
     }
 
@@ -82,8 +80,8 @@
       /*Раньше class sidebar */
       padding: 1%;
       background-color: #a2a2a2;
-      width: 180px;
       /*!!!!!!!! НЕ ТРОГАТЬ !!!!!!! ширина САЙДБАРА */
+      width: 180px;
       min-width: 13%;
       overflow: hidden;
       transition: all 0.3s;
@@ -92,16 +90,16 @@
     article {
       /*Раньше class article */
       padding: 1%;
-      width: 61%;
       /* ширина ОСНОВНОЙ ЧАСТИ */
+      width: 61%;
     }
 
+     /*Раньше и сейчас class ad - реклама */
     .ad {
-      /*Раньше и сейчас class ad - реклама */
       padding: 1%;
       background-color: #e2e2e2;
-      width: 26%;
       /* ширина ОСНОВНОЙ ЧАСТИ */
+      width: 26%;
     }
 
     footer {
@@ -112,43 +110,43 @@
     /* --- Стили раскрыающегося блока свернутого меню toc (table of content) --- */
     div.toc {
       cursor: pointer;
-      float: right;
       /*сдвигаем вправо + вынимаем из потока */
-      position: sticky;
+      float: right;
       /* Оглавление страницы станет прилипющим к верху*/
-      top: 25px;
+      position: sticky;
       /* Относится к position: sticky - Верхний край оглавления ниже родительского блока */
+      top: 25px;
+      /* Ширина свернутого Оглавления */
       width: 50px;
-      /* Высота блока с пиктограммой меню */
+      /* Текст в Оглавлении по центру */
       text-align: center;
-      /* Текст в блоке с пиктограммой меню по центру */
+      /* Цвет текста в Оглавлении */
       color: red;
-      /* Цвет текст в блоке */
-      margin: 2px 2px;
       /*поля */
-      border: 1px solid #bbb;
+      margin: 2px 2px;
       /* рамка блока */
-      background-color: rgba(246, 246, 246, 0.3);
+      border: 1px solid #bbb;
       /* Цвет ФОНА свернутого меню */
-      box-shadow: inset 0 0 10px #BABABA;
+      background-color: rgba(246, 246, 246, 0.3);
       /* ВНУТРЕННЯЯ ТЕНЬ для всех  браузеров кроме ИЕ8 и опера-мини*/
-      border-radius: 5px;
+      box-shadow: inset 0 0 10px #BABABA;
       /* радиус углов */
+      border-radius: 5px;
     }
-
+		/* Стиль заголовка Оглавлени */
     div.toc h4 {
       margin: 1px;
       padding: 1px;
     }
 
-    /* Стили списка в меню */
+    /* Стили списка в Оиглвлени */
     div.toc ol {
       display: none;
       margin: 1px;
       margin-left: 20px;
       padding: 1px;
     }
-
+    /* Стили пункта списка в Оиглвлени */
     div.toc li {
       text-align: left;
       margin: 1px;
@@ -157,26 +155,25 @@
     }
 
     .li_selected {
-      border: 1px solid #bbb;
       /*  рамка блока */
+      border: 1px solid #bbb;
       background-color: rgba(246, 246, 246, 1.0);
       /*Цвет ФОНА свернутого меню */
-      box-shadow: inset 0 0 10px #BABABA;
       /*ВНУТРЕННЯЯ ТЕНЬ для всех  браузеров кроме ИЕ8 и опера-мини */
-      border-radius: 5px;
+      box-shadow: inset 0 0 10px #BABABA;
       /*радиус углов  */
+      border-radius: 5px;
     }
 
     /* Стили ССЫЛОК в меню */
     .toc ol li a {
+      /* делаю цвет посещенной ссылки обычным для сайта */
       text-decoration: none;
       color: #585877;
-      /* делаю цвет посещенной ссылки обычным для сайта */
     }
-
+     /* убираю подчеркивание */
     .toc ol li a:visited {
       text-decoration: none;
-      /* убираю подчеркивание */
     }
 
     .toc_h:target {
@@ -184,10 +181,10 @@
       /*  рамка блока */
       background-color: rgba(246, 246, 246, 1);
       /*Цвет ФОНА свернутого меню */
-      box-shadow: inset 0 0 10px #BABABA;
       /*ВНУТРЕННЯЯ ТЕНЬ для всех  браузеров кроме ИЕ8 и опера-мини */
-      border-radius: 5px;
+      box-shadow: inset 0 0 10px #BABABA;
       /* радиус углов */
+      border-radius: 5px;
     }
 
     /* Стили заголовка параграфа */
@@ -221,6 +218,7 @@
       .ad {display: none;}
       aside {display: none;}
       article {width: 100%;}
+			.panel-for-site {display: none;}
       /* удаляем flex и делаем ширину инпутов и кода 100% */
 
       /* Увеличиваем высоту ссылок в ОГЛАВЛЕНИИ (размер активных элементов)	*/
@@ -352,7 +350,7 @@
         });
       }); // ====== КОНЕЦ управление оглавлением страницы =======
 
-      // ==== смена позиции sidebar ==================================
+      // ==== смена позиции sidebar с помощью JS. ==================================
       $('[name = sd-place]').click(function(){
         var a = $(this).attr('id');
         if(a == 'left') $('.main').css('flex-direction', 'row');
