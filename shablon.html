@@ -6,10 +6,23 @@
   - полупрозрачна, чтобы был виден текст под ней;
   - При нажатии появляется оглавление страницы;
   - При выборе пункта оглаления страницы происходит переход на странице к параграфу;
+    /* Эти стили работают только при загрузке страницы, при переключении работает JS */
+    .toc_h:target {
+      border: 1px solid #bbb;
+      /*  рамка блока */
+      background-color: rgba(246, 246, 246, 1);
+      /*Цвет ФОНА свернутого меню */
+      /*ВНУТРЕННЯЯ ТЕНЬ для всех  браузеров кроме ИЕ8 и опера-мини */
+      box-shadow: inset 0 0 10px #BABABA;
+      /* радиус углов */
+      border-radius: 5px;
+    }
   TO DO:
-    - При просмотре в мобильном телефоне НЕНАДЕЖНО происходит переход курсора на якорь.
+    - СДЕЛАНО При просмотре в мобильном телефоне НЕНАДЕЖНО происходит переход курсора на якорь.
       Вероятно надо сделать якорь абзаца СТРОГО по стандарту <a id=""></a>.
       Конструкция <a name=""></a> считается устаревшей.
+    - На маленьких экранах (@media) увеличить шрифт оглавления - тогда увеличится площадь для клика
+      ВМЕСТО увеличения line-height
 -->
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -67,9 +80,7 @@
       font-size: 20px;
       margin: 0 auto;
     }
-		.panel-for-site {
-			display: block;
-		}
+
 
     /* СЕРЕДИНА САЙТА - sidebar (aside), article, ad - реклама */
     .main {
@@ -156,7 +167,7 @@
       padding-left: 1px;
     }
 
-    .li_selected {
+    .selected {
       /*  рамка блока */
       border: 1px solid #bbb;
       background-color: rgba(246, 246, 246, 1.0);
@@ -177,30 +188,6 @@
     .toc ol li a:visited {
       text-decoration: none;
     }
-    /* Эти стили работают только при загрузке страницы, при переключении работает JS */
-    .toc_h:target {
-      border: 1px solid #bbb;
-      /*  рамка блока */
-      background-color: rgba(246, 246, 246, 1);
-      /*Цвет ФОНА свернутого меню */
-      /*ВНУТРЕННЯЯ ТЕНЬ для всех  браузеров кроме ИЕ8 и опера-мини */
-      box-shadow: inset 0 0 10px #BABABA;
-      /* радиус углов */
-      border-radius: 5px;
-    }
-
-    /* Стиль класса для h4:target  с помощью JS */
-    .target {
-      border: 1px solid #bbb;
-      /*  рамка блока */
-      background-color: rgba(246, 246, 246, 1);
-      /*Цвет ФОНА свернутого меню */
-      /*ВНУТРЕННЯЯ ТЕНЬ для всех  браузеров кроме ИЕ8 и опера-мини */
-      box-shadow: inset 0 0 10px #BABABA;
-      /* радиус углов */
-      border-radius: 5px;
-    }
-
     /* Стили заголовка параграфа */
     .toc_h {
       text-align: center;
@@ -232,7 +219,7 @@
       .ad {display: none;}
       aside {display: none;}
       article {width: 100%;}
-			.panel-for-site {display: none;}
+		.sidebar {display: none;}
       /* удаляем flex и делаем ширину инпутов и кода 100% */
 
       /* Увеличиваем высоту ссылок в ОГЛАВЛЕНИИ (размер активных элементов)	*/
@@ -252,14 +239,16 @@
     <!-- НАЧАЛО Контейнера сайта -->
     <header>
       <h1>ЛОГОТИП</h1>
-      <div class="panel-for-site">
+      <div class="selected">
         <label>
           <input type="checkbox" id="tip" checked="checked">Показывать перевод английских слов</label>
         <br>
-        <label>
-          <input type="radio" name='sd-place' id="left" checked="checked">слева </label> &lt;&lt; SIDEBAR &gt;&gt;
-        <label>
-          <input type="radio" name='sd-place' id="right"> справа</label>
+        <label class="sidebar">
+          <input type="radio" name='sd-place' id="left" checked="checked">слева &lt;&lt; SIDEBAR &gt;&gt;
+        </label>
+        <label class="sidebar">
+          <input type="radio" name='sd-place' id="right"> справа
+        </label>
       </div>
     </header>
     <div class="main">
@@ -331,11 +320,11 @@
       */
       if (hash.search(/#/) == 0) {
         /*Если первый элемент хэша знак # (начинается с 0) , то:
-        - У ВСЕХ li удаляем  класс li_selected.
+        - У ВСЕХ li удаляем  класс selected.
         - Находим родителя ссылки с атрибутом href равным хэшу и его РОДИТЕЛЮ присваиваем класс.
         */
-        $('div.toc ol li').removeClass('li_selected');
-        $('[href="' + hash + '"]').parent().attr("class", "li_selected");
+        $('div.toc ol li').removeClass('selected');
+        $('[href="' + hash + '"]').parent().attr("class", "selected");
         // -- Заголовки абзацев ----
         $('h4.toc_h').removeClass('target'); // Удаляем класс у всех заголовков абзацев
         // Находим якорь и его родителю присваиваем класс.
@@ -360,8 +349,8 @@
       });
       // Обрабатываем клик по пунку Оглавления.
       $('div.toc ol li').click(function() {
-        $('div.toc ol li').removeClass('li_selected'); // У ВСЕХ li удаляем класс
-        $(this).addClass('li_selected'); // Кликнутому li ставим класс
+        $('div.toc ol li').removeClass('selected'); // У ВСЕХ li удаляем класс
+        $(this).addClass('selected'); // Кликнутому li ставим класс
         $('.toc ol').css("display", "none"); // Всему списку display: none
         $('.toc').css({ // Оглавлению меняем некоторые стили.
           "width": "50",
@@ -370,8 +359,8 @@
         //alert($(this).children().attr("href"));
         // ---  Меняем стиль заголовка кликнутого абзаца ---
         var hr = $(this).children().attr("href").substring(1);
-        $('h4.toc_h').removeClass('target');
-        $('[id =' + hr + ']').parent().addClass('target');
+        $('h4.toc_h').removeClass('selected');
+        $('[id =' + hr + ']').parent().addClass('selected');
       }); // ====== КОНЕЦ управление оглавлением страницы =======
 
 
